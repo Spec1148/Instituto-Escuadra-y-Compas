@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto Escuadra y Compás - Registro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --amarillo: #FFD700;
+            --negro: #1a1a1a;
+            --blanco: #ffffff;
+            --gris-fondo: #f4f4f4;
+            --gris-borde: #e0e0e0;
+            --gris-capa: #f0f0f0;
+            --whatsapp: #25d366;
+            --instagram: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        body, html {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--blanco);
+            color: var(--negro);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+             #auth-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--blanco);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .auth-card {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            background: var(--gris-capa);
+            border: 1px solid var(--gris-borde);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .auth-card img {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            border: 4px solid var(--amarillo);
+            padding: 5px;
+            background-color: white;
+            object-fit: contain;
+            display: block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .auth-card h2 {
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .auth-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--gris-borde);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Inter';
+            outline: none;
+        }
+
+        .auth-card input:focus {
+            border-color: var(--amarillo);
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--negro);
+            color: var(--blanco);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-auth:hover {
+            background-color: var(--amarillo);
+            color: var(--negro);
+        }
+
+        #main-content {
+            display: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--blanco);
+            border-bottom: 1px solid var(--gris-borde);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 40px; height: 40px; object-fit: contain; }
+        .logo-text { color: var(--negro); font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin: 0; }
+
+        nav { display: flex; gap: 10px; }
+        nav a {
+            text-decoration: none;
+            color: var(--negro);
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            background-color: var(--gris-capa);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover {
+            background-color: var(--amarillo);
+        }
+
+        .slider-wrapper {
+            max-width: 700px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--gris-borde);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+            height: 400px;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--gris-borde);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+        .cursos-section { background-color: var(--gris-fondo); padding: 50px 5%; }
+        .grid-cursos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+        .curso-card {
+            background-color: var(--blanco);
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--gris-borde);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .curso-card h3 { margin: 0; font-size: 1.1rem; color: var(--negro); }
+
+        .curso-info {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            font-size: 0.85rem;
+            color: #555;
+            text-align: left;
+        }
+
+        .curso-card:hover {
+            border-color: var(--amarillo);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+            min-height: 200px;
+        }
+
+        .curso-card:hover h3 { color: var(--amarillo); margin-bottom: 10px; }
+        .curso-card:hover .curso-info { max-height: 300px; opacity: 1; }
+
+        .contacto-final { padding: 40px 5%; text-align: center; }
+        .botones-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn-contacto {
+            padding: 14px 28px; border-radius: 8px; text-decoration: none;
+            color: white; font-weight: 700; transition: 0.3s; min-width: 220px;
+        }
+        .btn-whatsapp { background-color: var(--whatsapp); }
+        .btn-instagram { background: var(--instagram); }
+
+        footer { background: var(--negro); color: white; text-align: center; padding: 20px; font-size: 0.8rem; }
+    </style></head><body>
+
+    <div id="auth-screen">
+        <div class="auth-card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOip6eCgNYCHlNk79ULLKEIIiBhYIm2Psm3Q&s" alt="Logo">
+            <h2>Bienvenido Nuestro Instituto Profesional</h2>
+            <form id="register-form">
+                <input type="text" placeholder="Nombre y Apellido" required>
+                <input type="email" placeholder="Correo Electrónico" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="submit" class="btn-auth">Registrarse y Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <div class="logo-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOip6eCgNYCHlNk79ULLKEIIiBhYIm2Psm3Q&s" alt="Logo" class="logo-img">
+                <h1 class="logo-text">Escuadra y Compás</h1>
+            </div>
+            <nav>
+                <a href="#inicio">Inicio</a>
+                <a href="#cursos">Cursos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </header>
+
+        <div class="slider-wrapper" id="inicio">
+            <button class="slider-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="slider" id="slider">
+                <img src="https://colegioruzafa.com/wp-content/uploads/auxiliar-de-enfemer%C3%ADa.jpg" alt="Slide 1">
+                <img src="https://es.babbel.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fzuzqvf4m2o58%2F3H0hAaAtA8l7w0OWeoYrGx%2Fd307d73b34be330e7550baad71296b18%2FSOK-_Learn_Portuguese.jpg&w=1920&q=75" alt="Slide 2">
+                <img src="https://www.galileo.edu/wp-content/uploads/2012/04/07-2.jpg" alt="Slide 3">
+                <img src="https://d2qbblo43j0vwz.cloudfront.net/wp-content/uploads/2025/09/que-hace-una-manicurista.png" alt="Slide 4">
+                <img src="https://cms.usanmarcos.ac.cr/sites/default/files/styles/large/public/2024-05/5-tecnicas-de-estudio-efectivas.png?itok=mLlYQ1kk" alt="Slide 5">
+                <img src="https://gpautomocion.com/wp-content/uploads/2024/08/estudiar-mecanica.jpg" alt="Slide 6">
+                <img src="https://aprende.com/wp-content/uploads/2020/11/principales-ventajas-de-aprender-reposteria-en-aprende-institute.png" alt="Slide 7">
+            </div>
+            <button class="slider-btn next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+
+        <section class="cursos-section" id="cursos">
+            <div class="grid-cursos">
+                <div class="curso-card">
+                    <h3>Inglés</h3>
+                    <div class="curso-info">Programa basado en el Marco Común Europeo (MCER). Enfocado en el desarrollo de las cuatro destrezas: habla, escucha, lectura y escritura.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Informática</h3>
+                    <div class="curso-info">Desde arquitectura de hardware hasta administración de software. Incluye mantenimiento, seguridad digital y herramientas de oficina.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Computacion y Excel</h3>
+                    <div class="curso-info">Domina fórmulas complejas, Dashboards dinámicos, Macros automáticas y gestión de Power Query para la toma de decisiones.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Oratoria</h3>
+                    <div class="curso-info">Domina el arte de hablar en público, control de miedo escénico, lenguaje corporal persuasivo y estructuras de impacto.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Community Manager</h3>
+                    <div class="curso-info">Gestión de comunidades online, creación de planes de contenido, copywriting y estrategias de crecimiento digital.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Manejo de Redes Sociales y Marketing Digital</h3>
+                    <div class="curso-info">Estrategias de crecimiento en Instagram, TikTok y Facebook. Uso técnico de algoritmos y creación de contenido viral.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Masaje y Fisioterapia</h3>
+                    <div class="curso-info">Técnicas manuales de relajación, bases de anatomía humana y fundamentos de rehabilitación física preventiva.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Refrigeración</h3>
+                    <div class="curso-info">Instalación y mantenimiento de equipos de climatización, manejo de gases refrigerantes y diagnóstico de fallas.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Mecánica Automotriz</h3>
+                    <div class="curso-info">Estudio de motores, sistemas de inyección electrónica, frenos ABS y escaneo computarizado de precisión.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Cocina Internacional</h3>
+                    <div class="curso-info">Técnicas de las cocinas más influyentes del mundo. Incluye manejo higiénico, técnicas de corte y emplatado profesional.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Repostería</h3>
+                    <div class="curso-info">Elaboración de pastelería fina, panadería artesanal, técnicas de horneado y decoración artística de nivel profesional.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Corte y Costura</h3>
+                    <div class="curso-info">Diseño y confección de prendas, patronaje industrial y manejo experto de máquinas de coser planas y overlok.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Bartender</h3>
+                    <div class="curso-info">Mixología clásica y moderna, preparación de cocteles, servicio de barra profesional y control de costos de bebidas.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Marketing Digital</h3>
+                    <div class="curso-info">Campañas en Meta Ads, posicionamiento SEO, embudos de venta y análisis de métricas para aumentar conversiones.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Asistente de Enfermería</h3>
+                    <div class="curso-info">Cuidado del paciente, signos vitales, administración de medicamentos bajo supervisión y protocolos de bioseguridad.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Asistente de Farmacia</h3>
+                    <div class="curso-info">Conocimiento de farmacología básica, atención al cliente y gestión administrativa de inventarios farmacéuticos.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Asistente de Laboratorio</h3>
+                    <div class="curso-info">Toma de muestras, procesamiento básico, manejo de equipos de laboratorio y normas de seguridad en el análisis clínico.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Asistente Contable</h3>
+                    <div class="curso-info">Gestión de libros contables, nóminas, conciliación bancaria y preparación de estados financieros para emprendimientos.</div>
+                </div>
+
+                <div class="curso-card">
+                    <h3>Reparación de Teléfonos</h3>
+                    <div class="curso-info">Técnicas de microsoldadura, cambio de pantallas, reconstrucción de pistas y diagnóstico de software avanzado.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contacto-final" id="contacto">
+            <div class="botones-container">
+                <a href="https://wa.me/584149063901" class="btn-contacto btn-whatsapp" target="_blank">WhatsApp Inscripciones</a>
+                <a href="https://www.instagram.com/institutoescuadraycompas" class="btn-contacto btn-instagram" target="_blank">Instagram Oficial</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Instituto Escuadra y Compás Creado Por Daniel Salazar.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const authScreen = document.getElementById('auth-screen');
+            const mainContent = document.getElementById('main-content');
+            authScreen.style.opacity = '0';
+            setTimeout(() => {
+                authScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+                moveSlide(0);
+            }, 500);
+        });
+
+        let slideIndex = 0;
+        const slider = document.getElementById('slider');
+        const slides = slider.querySelectorAll('img');
+
+        function moveSlide(n) {
+            if (slides.length === 0) return;
+            slideIndex += n;
+            if (slideIndex >= slides.length) slideIndex = 0;
+            if (slideIndex < 0) slideIndex = slides.length - 1;
+            slider.style.transform = `translateX(${-slideIndex * 100}%)`;
+        }
+
+        setInterval(() => {
+            if(document.getElementById('main-content').style.display === 'block') {
+                moveSlide(1);
+            }
+        }, 5000);
+    
+    </script></body></html>
